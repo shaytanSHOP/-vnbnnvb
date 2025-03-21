@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revolution | Танцевальный коллектив</title>
+    <meta name="description" content="Официальный сайт танцевального коллектива Revolution. Присоединяйтесь к нашей дружной команде!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        
+        .loading-container {
+            max-width: 600px;
+            padding: 20px;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(270deg, #ff0000, #ff00ff, #0000ff, #00ffff, #ff0000);
+            background-size: 1000% 1000%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-shift 15s ease infinite;
+            margin-bottom: 20px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff0000;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+        
+        .message {
+            margin-top: 20px;
+            color: #ccc;
+        }
+        
+        .redirect-button {
+            margin-top: 30px;
+            background: linear-gradient(to right, #ff3e3e, #ff00ff);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .redirect-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: rgba(255, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container" id="particles"></div>
+    
+    <div class="loading-container">
+        <div class="logo">REVOLUTION</div>
+        <div class="spinner"></div>
+        <div class="message">Загрузка сайта танцевального коллектива...</div>
+        <p>Если страница не загружается автоматически, нажмите кнопку ниже:</p>
+        <button class="redirect-button" onclick="redirectToApp()">Перейти на сайт</button>
+    </div>
+    
+    <script>
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            createParticle();
+        }
+        
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random position
+            const posX = Math.random() * window.innerWidth;
+            const posY = Math.random() * window.innerHeight;
+            
+            // Random size
+            const size = Math.random() * 5 + 2;
+            
+            // Random color (red to purple)
+            const r = Math.floor(Math.random() * 255);
+            const g = 0;
+            const b = Math.floor(Math.random() * 100);
+            const a = Math.random() * 0.5 + 0.2;
+            
+            particle.style.left = `${posX}px`;
+            particle.style.top = `${posY}px`;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`;
+            
+            // Random animation
+            const duration = Math.random() * 20 + 10;
+            const delay = Math.random() * 5;
+            
+            particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+            
+            particlesContainer.appendChild(particle);
+            
+            // Animate particle
+            animateParticle(particle);
+        }
+        
+        function animateParticle(particle) {
+            // Random movement
+            const moveX = Math.random() * 100 - 50;
+            const moveY = Math.random() * 100 - 50;
+            const duration = Math.random() * 10 + 5;
+            
+            setTimeout(() => {
+                const currentX = parseFloat(particle.style.left);
+                const currentY = parseFloat(particle.style.top);
+                
+                particle.style.transition = `all ${duration}s ease-in-out`;
+                particle.style.left = `${currentX + moveX}px`;
+                particle.style.top = `${currentY + moveY}px`;
+                
+                // Continue animation
+                setTimeout(() => animateParticle(particle), duration * 1000);
+            }, 100);
+        }
+        
+        // Redirect to the Next.js app
+        function redirectToApp() {
+            window.location.href = '/';
+        }
+        
+        // Auto redirect after 3 seconds
+        setTimeout(redirectToApp, 3000);
+    </script>
+</body>
+</html>
+
